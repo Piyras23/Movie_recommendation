@@ -1,7 +1,7 @@
-# Use the official Python image as a base image
+# Python image as a base image
 FROM python:3.9-slim
 
-# Set the working directory in the container
+# Working directory in the container
 WORKDIR /app
 
 # Copy the current directory contents into the container
@@ -24,5 +24,5 @@ EXPOSE 8501
 # Define environment variable
 ENV FLASK_APP flask_app.py
 
-# Run Streamlit app when the container launches
-CMD ["streamlit", "run", "streamlit_app.py"]
+# Run both Flask and Streamlit when the container launches
+CMD ["bash", "-c", "flask run --host=0.0.0.0 --port=5001 & streamlit run streamlit_app.py"]
