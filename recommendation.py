@@ -5,7 +5,7 @@ from surprise import KNNBasic
 from surprise import accuracy as surprise_accuracy
 
 def load_data():
-    # Load data only rating and movies 
+    # Loading data rating, movies and tage (only for factor influence)
     df_rating = pd.read_csv('ratings.csv')
     df_movies = pd.read_csv('movies.csv')
     df_tag = pd.read_csv('tags.csv')
