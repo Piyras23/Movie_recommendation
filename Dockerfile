@@ -14,11 +14,15 @@ RUN apt-get update && \
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 5001 available to the world outside this container
+# Install Streamlit
+RUN pip install streamlit
+
+# Make ports 5001 and 8501 available to the world outside this container
 EXPOSE 5001
+EXPOSE 8501
 
 # Define environment variable
 ENV FLASK_APP flask_app.py
 
-# Run app.py when the container launches
-CMD ["flask", "run", "--host", "0.0.0.0", "--port", "5001"]
+# Run Streamlit app when the container launches
+CMD ["streamlit", "run", "streamlit_app.py"]
