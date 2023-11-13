@@ -59,9 +59,11 @@ def main():
     model = train_model(trainset)
 
     # Example: Get recommendations for user 1
-    user_id = 2
+    user_id = 1
     recommendations = get_user_recommendations(model, user_id, df_rating, df_movies)
+    
     print(f"Top 5 movie recommendations for User {user_id}:\n{recommendations}")
 
 if __name__ == "__main__":
     main()
+    print('\n','Recommenation are calculated based on User-Base Collaborative Filtering')
