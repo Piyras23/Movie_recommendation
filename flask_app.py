@@ -33,7 +33,7 @@ def get_user_recommendations(user_id, N=5):
     # Merging with movie titles
     user_recommendations = pd.merge(user_predictions_df, df_movies[['movieId', 'title']], on='movieId')
 
-    # Get top N recommendations
+    # top 5 recommendations
     user_top_n = user_recommendations.sort_values(by='estimated_rating', ascending=False).head(N)
 
     return user_top_n[['title', 'estimated_rating']]
@@ -50,5 +50,4 @@ def recommend_movies():
     return jsonify(recommendations.to_dict(orient='records'))
 
 if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=5001)
-
+    app.run(debug=False, host='0.0.0.0', port=5001)

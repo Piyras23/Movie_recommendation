@@ -3,8 +3,8 @@ import requests
 
 # Moovie recommendations from Flask API
 def get_movie_recommendations(user_id):
-    url = "http://flask_container_name:5001/user_recommendations?user_id={user_id}"
-
+    #Use flask container name via docker ps or docker ps -a
+    url = f"http://lucid_villani:5001/user_recommendations?user_id={user_id}"
     response = requests.get(url)
     data = response.json()
     return data
@@ -24,4 +24,4 @@ if recommendations:
     for movie in recommendations['movies']:
         st.write(f"- {movie['title']} (Factors: {', '.join(movie['factors'])})")
 else:
-    st.warning("No recommendations available.")
+    st.warning("No recommendations available.")         
