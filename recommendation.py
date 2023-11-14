@@ -5,7 +5,7 @@ from surprise import KNNBasic
 from surprise import accuracy as surprise_accuracy
 
 def load_data():
-    # Loading data rating, movies and tage (only for factor influence)
+    # Loading data rating, movies and tag (only for factor influence)
     df_rating = pd.read_csv('ratings.csv')
     df_movies = pd.read_csv('movies.csv')
     df_tag = pd.read_csv('tags.csv')
@@ -16,7 +16,7 @@ def load_data():
 def preprocess_data(df_rating, df_movies, df_tag):
     df_movie_rating = df_rating.merge(df_movies)
     
-    # Bonus Factors influencing 
+    # Bonus:  Factors influencing 
     df_movie_rating_tag = pd.merge(df_movie_rating,df_tag, on='movieId')
     df_movie_rating_tag.drop(labels=['timestamp_x','userId_y','timestamp_y'], axis=1, inplace=True)
     df_movie_rating_tag.rename(columns={'userId_x': 'userId'}, inplace=True)
@@ -30,7 +30,7 @@ def preprocess_data(df_rating, df_movies, df_tag):
     return trainset, testset
 
 def train_model(trainset):
-    # Train the model using KNNBasic with cosine similarity
+    #cosine similarity
     sim_options = {'name': 'cosine', 'user_based': True}
     
     #Using KNN wrt Cosine Similarity by DOT product calculation:
@@ -49,18 +49,17 @@ def calculate_factors(row, df_movie_rating_tag):
 
 
 def get_user_recommendations(model, user_id, df_rating, df_movies, N=5):
-    # Unrated movies for the user
+    # Taking unrated movies
     user_movies = df_rating[df_rating['userId'] == user_id]['movieId'].unique()
     user_unrated_movies = df_rating[~df_rating['movieId'].isin(user_movies)]['movieId'].unique()
     user_unrated_movies = [(user_id, movie_id, 3.0) for movie_id in user_unrated_movies]
 
-    # Predictions for unrated movies
+    # Predictions
     user_predictions = model.test(user_unrated_movies)
 
     # DataFrame for easy manipulation
     user_predictions_df = pd.DataFrame([[pred.uid, pred.iid, pred.est] for pred in user_predictions], columns=['userId', 'movieId', 'estimated_rating'])
 
-    # Merging with movie titles
     user_recommendations = pd.merge(user_predictions_df, df_movies[['movieId', 'title']], on='movieId')
 
     # Add factor using only genre influencing recommendations
@@ -82,7 +81,7 @@ def main():
     user_id = 1
     recommendations = get_user_recommendations(model, user_id, df_rating, df_movies)
 
-    # Evaluate the model on the test set
+    # Evaluating on test set
     predictions = model.test(testset)
     accuracy = surprise_accuracy.rmse(predictions)
 
