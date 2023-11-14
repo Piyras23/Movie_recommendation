@@ -4,7 +4,7 @@ import requests
 # Moovie recommendations from Flask API
 def get_movie_recommendations(user_id):
     #Flask container name via docker ps or docker ps -a
-    url = f"http://lucid_villani:5001/user_recommendations?user_id={user_id}"
+    url = f"http://inspiring_ganguly:5001/user_recommendations?user_id={user_id}"
     response = requests.get(url)
     data = response.json()
     return data
