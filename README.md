@@ -49,15 +49,14 @@ The `python_scripts` directory contains Python scripts for processing JSON data,
 The `flask_app.py` file contains the Flask application that serves movie recommendations. Run the Flask app using the following command:
 
 ```bash
-docker build -t movie_recommendation .
-
-docker run -p 5001:5001 -p 8501:8501 movie_recommendation
-
-```bash
 pyhton run flask_app.py
 
 streamlit run streamlit_app.py
 
+```bash
+docker build -t movie_recommendation .
+
+docker run -p 5001:5001 -p 8501:8501 movie_recommendation
 # Expected url : http://localhost:5001/user_recommendations?user_id=1
 
 # Expected output: [{"estimated_rating":5.0,"title":"English Vinglish (2012)"},{"estimated_rating":5.0,"title":"Mother (Madeo) (2009)"},{"estimated_rating":5.0,"title":"Voices from the List (2004)"},{"estimated_rating":5.0,"title":"Siam Sunset (1999)"},{"estimated_rating":5.0,"title":"Boy Eats Girl (2005)"}]
